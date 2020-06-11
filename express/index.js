@@ -25,6 +25,30 @@ app.get('/ola/:nome/:cargo/:cor', (req, res) => {
   );
 }); // Rota com parâmetro
 
+app.get(
+  '/testeMultiMet',
+  (_req, res, next) => {
+    res.send('primeiro método');
+    next();
+  },
+  (_req, _res) => {
+    console.log('segundo metodo');
+    _res.end();
+  }
+);
+
+const callback1 = (req, res, next) => {
+  res.send('Callback1');
+  next();
+};
+
+const callback2 = (req, res, next) => {
+  console.log('Callback2');
+  res.end();
+};
+
+app.get('/texteMultiMetArray', [callback1, callback2]);
+
 app.listen(8081, () => {
   console.log('Servidor rodando na url http://localhost:8081');
 });
